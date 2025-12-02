@@ -1,36 +1,34 @@
 package repository.base;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.*;
 
-public class BaseEntity {
+public abstract class AbstractCrudRepository implements CrudRepository {
 
     protected final Connection connection;
-
     private PreparedStatement findByIdStatement;
 
-    protected AbstractCrudRepository(Connection connection) {
+    public AbstractCrudRepository(Connection connection) {
         this.connection = connection;
     }
 
     @Override
-    public BaseDomain findById(Integer id) {
+    public Object findBy(String column, Object value) {
         try {
-            PreparedStatement statement = getFindByIdStatement();
-            statement.setInt(1, id);
+            //PreparedStatement statement = getFindByIdStatement();
+            PreparedStatement statement = connection.prepareStatement("select * from " + getTableName() + " where " + column + " = ?");
+            statement.setObject(1, value);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                BaseDomain domain = getBaseDomain(resultSet);
-                domain.setId(resultSet.getInt(1));
-                return domain;
+                return getEntity(resultSet);
             }
             return null;
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    protected PreparedStatement getFindByIdStatement() {
+    /*protected PreparedStatement getFindByIdStatement() {
         if (findByIdStatement == null) {
             try {
                 findByIdStatement = connection.prepareStatement("select * from " + getTableName() + " where id = ?");
@@ -39,10 +37,10 @@ public class BaseEntity {
             }
         }
         return findByIdStatement;
-    }
+    }*/
 
-    protected abstract BaseDomain getBaseDomain(ResultSet resultSet);
+    protected abstract Object getEntity(ResultSet resultSet);
 
     public abstract String getTableName();
-     */
+
 }

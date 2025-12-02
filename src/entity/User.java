@@ -1,3 +1,5 @@
+package entity;
+
 public class User {
     private Integer id;
     private String username;
@@ -9,8 +11,24 @@ public class User {
     }
 
     public User(Integer id, String username, String password) {
-        this(username,password);
+        this(username, password);
         this.id = id;
+    }
+
+    public User() {
+    }
+
+    public void setId(Integer id) {
+
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPassword() {

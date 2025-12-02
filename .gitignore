@@ -2,6 +2,8 @@
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+Zahra_Emami_HW8_maktab138.iml
+.idea
 
 ### Eclipse ###
 .apt_generated

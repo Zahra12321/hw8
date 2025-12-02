@@ -1,4 +1,5 @@
 package entity;
 
-public class Card {
+public record Card(Integer cardNumber, String bankName) {
+
 }
