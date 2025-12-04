@@ -14,9 +14,10 @@ public class UserRepository extends AbstractCrudRepository {
         super(connection);
     }
 
-    public void save(User user) {
+    @Override
+    public Object save(Object object) {
+        User user = (User) object;
         try {
-
             PreparedStatement ps = connection.prepareStatement(
                     "INSERT INTO login_info (USERNAME, PASSWORD) VALUES (? , ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getUsername());
@@ -27,8 +28,8 @@ public class UserRepository extends AbstractCrudRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
-
 
     @Override
     protected Object getEntity(ResultSet resultSet) {
@@ -48,28 +49,5 @@ public class UserRepository extends AbstractCrudRepository {
         return "login_info";
     }
 
-    @Override
-    public void save(Object object) {
 
-    }
-
-    @Override
-    public List<Object> findAll(String column) {
-        return List.of();
-    }
-
-    @Override
-    public void deleteById(Integer id) {
-
-    }
-
-    @Override
-    public long count() {
-        return 0;
-    }
-
-    @Override
-    public boolean existsById(Integer id) {
-        return false;
-    }
 }

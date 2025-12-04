@@ -1,6 +1,8 @@
 package util;
 
+import Service.CardService;
 import Service.UserService;
+import repository.CardRepository;
 import repository.UserRepository;
 
 import java.sql.Connection;
@@ -12,11 +14,15 @@ public class ApplicationContext {
     public static final Connection connection;
     public static final UserRepository userRepository;
     public static final UserService userService;
+    public static final CardRepository cardRepository;
+    public static final CardService cardService;
 
     static {
         connection = getInstance().getConnection();
         userRepository = new UserRepository(connection);
         userService = new UserService(userRepository);
+        cardRepository = new CardRepository(connection);
+        cardService = new CardService(cardRepository);
     }
 
     public static UserService getUserService(){
@@ -31,8 +37,6 @@ public class ApplicationContext {
         }
         return CTX;
     }
-
-
 
     public Connection getConnection() {
         if (connection == null){

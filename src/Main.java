@@ -1,8 +1,7 @@
-import Service.UserService;
-import entity.User;
-import repository.UserRepository;
+import Service.LoginMenu;
 import util.ApplicationContext;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -10,10 +9,9 @@ public class Main {
     static Scanner stringInput = new Scanner(System.in);
 
     public static void main(String[] args) {
-        boolean logIn = true;
+        LoginMenu loginMenu = new LoginMenu();
 
-
-        while (logIn) {
+        while (true) {
 
             System.out.println("""
                     1. register
@@ -25,20 +23,19 @@ public class Main {
             switch (choose) {
                 case 1:
                     ApplicationContext.userService.register();
-                    /*while (logIn) {
 
-                        //UserRepository.save();
-                        //passengerRepository.save();
-                    }*/
                     break;
                 case 2:
-                    if (ApplicationContext.userService.login()) {
-                        //ApplicationContext.cardService.menu();
+                    Integer userId = ApplicationContext.userService.login();
+                    if (userId != null) {
+                        loginMenu.menu(userId);
                     }
                     break;
                 case 3:
                     return;
             }
+            String[] h = new String[5];
+            Arrays.fill(h, "?");
         }
     }
 

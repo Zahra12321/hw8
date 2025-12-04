@@ -13,7 +13,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void register() {
+    public boolean register(/*username, password*/) {
         boolean registered = false;
         String username, password;
         while (!registered) {
@@ -25,14 +25,14 @@ public class UserService {
                 password = stringInput.nextLine();
                 userRepository.save(new User(username, password));
                 System.out.println("Registered successfully!");
-                return;
+                return true;
             } else {
                 System.out.println("Username has been taken!");
             }
         }
     }
 
-    public boolean login() {
+    public Integer login() {
         boolean loggedIn = false;
         String username, password;
         while (true) {
@@ -45,7 +45,7 @@ public class UserService {
                     password = stringInput.nextLine();
                     if (password.equals(found.getPassword())) {
                         System.out.println("login successful!");
-                        return true;
+                        return found.getId();
                     } else {
                         System.out.println("Wrong password!");
                     }
