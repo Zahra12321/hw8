@@ -23,6 +23,18 @@ public class TransactionLog {
         this.status = "WAITING";
     }
 
+
+
+    public void satnaTransaction() {
+        if (srcCard.getBalance() >= amount) {
+            srcCard.withdraw((int) (amount + (amount * 0.003)));
+            destCard.deposit(amount);
+            status = Status.DONE.toString();
+        } else {
+            status = Status.FAILED.toString();
+        }
+    }
+
     public void payaPersonalTransaction() {
         if (srcCard.getBalance() >= amount) {
             srcCard.withdraw((int) (amount + (amount * 0.001)));

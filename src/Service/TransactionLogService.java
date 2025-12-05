@@ -13,18 +13,8 @@ public class TransactionLogService {
         this.transactionLogRepository = transactionLogRepository;
     }
 
-    public void cardTransaction(TransactionLog tLog, int transactionTyp){
-        switch (transactionTyp) {
-            case 1, 2:
-                ApplicationContext.cardRepository.processPaymentDB(tLog.getSrcCard(), tLog.getDestCard());
-                ApplicationContext.transactionLogRepository.save(tLog);
-                break;
-            case 3:
-
-                break;
-            case 4:
-
-                break;
-        }
+    public void cardTransaction(TransactionLog tLog) {
+        ApplicationContext.cardRepository.processPaymentDB(tLog.getSrcCard(), tLog.getDestCard());
+        ApplicationContext.transactionLogRepository.save(tLog);
     }
 }

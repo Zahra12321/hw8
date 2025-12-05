@@ -42,16 +42,16 @@ public class TransactionMenu {
 
                     tLog = new TransactionLog(srcCard, destCard, amount);
                     tLog.cToCTransaction();
-                    ApplicationContext.transactionLogService.cardTransaction(tLog,1);
+                    ApplicationContext.transactionLogService.cardTransaction(tLog);
                     break;
                 case 2:
                     System.out.println("choose a card number: ");
-                     myCards = ApplicationContext.cardService.showAllCards(userId);
-                     srcCardNum = printCards(ApplicationContext.cardService.showAllCards(userId));
+                    myCards = ApplicationContext.cardService.showAllCards(userId);
+                    srcCardNum = printCards(ApplicationContext.cardService.showAllCards(userId));
                     System.out.println("choose destination card number: ");
-                     srcCard = ApplicationContext.cardService.selectCard(srcCardNum);
-                     destCardNum = printCards(ApplicationContext.cardService.allCards());
-                     destCard = ApplicationContext.cardService.selectCard(destCardNum);
+                    srcCard = ApplicationContext.cardService.selectCard(srcCardNum);
+                    destCardNum = printCards(ApplicationContext.cardService.allCards());
+                    destCard = ApplicationContext.cardService.selectCard(destCardNum);
                     do {
                         System.out.println("enter a valid amount: ");
                         amount = intInput.nextInt();
@@ -60,13 +60,28 @@ public class TransactionMenu {
 
                     tLog = new TransactionLog(srcCard, destCard, amount);
                     tLog.payaPersonalTransaction();
-                    ApplicationContext.transactionLogService.cardTransaction(tLog,2);
+                    ApplicationContext.transactionLogService.cardTransaction(tLog);
                     break;
                 case 3:
 
                     break;
                 case 4:
+                    System.out.println("choose a card number: ");
+                    myCards = ApplicationContext.cardService.showAllCards(userId);
+                    srcCardNum = printCards(ApplicationContext.cardService.showAllCards(userId));
+                    System.out.println("choose destination card number: ");
+                    srcCard = ApplicationContext.cardService.selectCard(srcCardNum);
+                    destCardNum = printCards(ApplicationContext.cardService.allCards());
+                    destCard = ApplicationContext.cardService.selectCard(destCardNum);
+                    do {
+                        System.out.println("enter a valid amount: ");
+                        amount = intInput.nextInt();
 
+                    } while (amount > 200000000 && amount < 50000000);
+
+                    tLog = new TransactionLog(srcCard, destCard, amount);
+                    tLog.satnaTransaction();
+                    ApplicationContext.transactionLogService.cardTransaction(tLog);
                     break;
                 case 5:
                     return;
