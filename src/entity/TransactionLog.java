@@ -23,6 +23,16 @@ public class TransactionLog {
         this.status = "WAITING";
     }
 
+    public void payaPersonalTransaction() {
+        if (srcCard.getBalance() >= amount) {
+            srcCard.withdraw((int) (amount + (amount * 0.001)));
+            destCard.deposit(amount);
+            status = Status.DONE.toString();
+        } else {
+            status = Status.FAILED.toString();
+        }
+    }
+
     public void cToCTransaction() {
         if (srcCard.getBalance() >= amount) {
             if (srcCard.getBankName().equals(destCard.getBankName())) {

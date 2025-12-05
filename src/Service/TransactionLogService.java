@@ -15,12 +15,9 @@ public class TransactionLogService {
 
     public void cardTransaction(TransactionLog tLog, int transactionTyp){
         switch (transactionTyp) {
-            case 1:
+            case 1, 2:
                 ApplicationContext.cardRepository.processPaymentDB(tLog.getSrcCard(), tLog.getDestCard());
                 ApplicationContext.transactionLogRepository.save(tLog);
-                break;
-            case 2:
-
                 break;
             case 3:
 

@@ -43,10 +43,24 @@ public class TransactionMenu {
                     tLog = new TransactionLog(srcCard, destCard, amount);
                     tLog.cToCTransaction();
                     ApplicationContext.transactionLogService.cardTransaction(tLog,1);
-
                     break;
                 case 2:
+                    System.out.println("choose a card number: ");
+                     myCards = ApplicationContext.cardService.showAllCards(userId);
+                     srcCardNum = printCards(ApplicationContext.cardService.showAllCards(userId));
+                    System.out.println("choose destination card number: ");
+                     srcCard = ApplicationContext.cardService.selectCard(srcCardNum);
+                     destCardNum = printCards(ApplicationContext.cardService.allCards());
+                     destCard = ApplicationContext.cardService.selectCard(destCardNum);
+                    do {
+                        System.out.println("enter a valid amount: ");
+                        amount = intInput.nextInt();
 
+                    } while (amount > 50000000 && amount < 0);
+
+                    tLog = new TransactionLog(srcCard, destCard, amount);
+                    tLog.payaPersonalTransaction();
+                    ApplicationContext.transactionLogService.cardTransaction(tLog,2);
                     break;
                 case 3:
 
