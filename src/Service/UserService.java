@@ -30,10 +30,10 @@ public class UserService {
                 System.out.println("Username has been taken!");
             }
         }
+        return false;
     }
 
     public Integer login() {
-        boolean loggedIn = false;
         String username, password;
         while (true) {
             System.out.println("please enter a username:");

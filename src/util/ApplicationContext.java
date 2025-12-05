@@ -1,8 +1,10 @@
 package util;
 
 import Service.CardService;
+import Service.TransactionLogService;
 import Service.UserService;
 import repository.CardRepository;
+import repository.TransactionLogRepository;
 import repository.UserRepository;
 
 import java.sql.Connection;
@@ -16,6 +18,8 @@ public class ApplicationContext {
     public static final UserService userService;
     public static final CardRepository cardRepository;
     public static final CardService cardService;
+    public static final TransactionLogRepository transactionLogRepository;
+    public static final TransactionLogService transactionLogService;
 
     static {
         connection = getInstance().getConnection();
@@ -23,6 +27,8 @@ public class ApplicationContext {
         userService = new UserService(userRepository);
         cardRepository = new CardRepository(connection);
         cardService = new CardService(cardRepository);
+        transactionLogRepository = new TransactionLogRepository(connection);
+        transactionLogService = new TransactionLogService(transactionLogRepository);
     }
 
     public static UserService getUserService(){

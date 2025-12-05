@@ -15,6 +15,22 @@ public class CardRepository extends AbstractCrudRepository {
         super(connection);
     }
 
+    public void processPaymentDB(Card srcCard, Card destCard) {
+        String sql = "update " + getTableName() + " SET balance = ? WHERE card_number = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, srcCard.getBalance());
+            ps.setString(2, srcCard.getCardNumber());
+            ps.executeUpdate();
+            ps.setInt(1, destCard.getBalance());
+            ps.setString(2, destCard.getCardNumber());
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public Object save(Object object) {
         Card card = (Card) object;
@@ -45,16 +61,48 @@ public class CardRepository extends AbstractCrudRepository {
         return null;
     }
 
-
-    public ArrayList<Card> findBy(String column, Integer id) {
+    public ArrayList<Card> findBy(String column, String value, Integer id) {
         ArrayList<Card> result = new ArrayList<>();
         try {
-            PreparedStatement statement = connection.prepareStatement("select card_number, bank_name, balance from " + getTableName() + " where " + column + " = ? and user_id = ?");
-            statement.setString(1, column);
+            PreparedStatement statement = connection.prepareStatement("select * from " + getTableName() + " where " + column + " = ? and user_id = ?");
+            statement.setString(1, value);
             statement.setInt(2, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                result.add(new Card(resultSet.getString(1), resultSet.getString(2), resultSet.getInt(3)));
+                result.add(new Card(resultSet.getString(1), resultSet.getString(2), resultSet.getInt(3), resultSet.getInt(4)));
+            }
+            return result;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Card> allCards() {
+        ArrayList<Card> result = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement("select * from " + getTableName());
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                result.add(new Card(resultSet.getString(1), resultSet.getString(2), resultSet.getInt(3), resultSet.getInt(4)));
+            }
+            return result;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Card> showAll(Integer id) {
+        ArrayList<Card> result = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "select * from " + getTableName() + " where user_id = ?");
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                result.add(new Card(resultSet.getString(1), resultSet.getString(2), resultSet.getInt(3), resultSet.getInt(4)));
             }
             return result;
 
@@ -69,6 +117,8 @@ public class CardRepository extends AbstractCrudRepository {
         try {
             card.setCardNumber(resultSet.getString(1));
             card.setBankName(resultSet.getString(2));
+            card.setUserId(resultSet.getInt(3));
+            card.setBalance(resultSet.getInt(4));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class Main {
     static Scanner intInput = new Scanner(System.in);
-    static Scanner stringInput = new Scanner(System.in);
 
     public static void main(String[] args) {
         LoginMenu loginMenu = new LoginMenu();
@@ -16,8 +15,7 @@ public class Main {
             System.out.println("""
                     1. register
                     2. log in
-                    3. exit
-                    """);
+                    3. exit""");
             int choose = intInput.nextInt();
 
             switch (choose) {
@@ -34,8 +32,6 @@ public class Main {
                 case 3:
                     return;
             }
-            String[] h = new String[5];
-            Arrays.fill(h, "?");
         }
     }
 

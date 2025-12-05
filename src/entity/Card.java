@@ -9,16 +9,30 @@ public class Card {
     public Card() {
     }
 
-    public Card(String cardNumber, String bankName, Integer userId) {
+    public Card(String cardNumber) {
         this.cardNumber = cardNumber;
+    }
+
+    public Card(String cardNumber, String bankName, Integer userId) {
+        this(cardNumber);
         this.bankName = bankName;
         this.userId = userId;
     }
 
-    public Card(String cardNumber, String bankName, int balance) {
-        this.cardNumber = cardNumber;
-        this.bankName = bankName;
+    public Card(String cardNumber, String bankName, Integer userId, int balance) {
+        this(cardNumber, bankName, userId);
         this.balance = balance;
+    }
+
+    public void deposit(int amount) {
+        balance += amount;
+    }
+
+    public void withdraw(int amount) throws IllegalArgumentException {
+        if (amount > balance) {
+            throw new IllegalArgumentException("Insufficient funds in account: " + cardNumber);
+        }
+        balance -= amount;
     }
 
     public void setCardNumber(String cardNumber) {

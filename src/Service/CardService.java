@@ -11,14 +11,24 @@ public class CardService {
     static Scanner intInput = new Scanner(System.in);
     static Scanner stringInput = new Scanner(System.in);
     private final CardRepository cardRepository;
-    private ArrayList<Card> cards = new ArrayList<>();
 
     public CardService(CardRepository cardRepository) {
         this.cardRepository = cardRepository;
     }
 
-    public ArrayList<Card> showCards(String cardNumber, Integer id) {
-        return ApplicationContext.cardRepository.findBy(cardNumber, id);
+    public ArrayList<Card> allCards() {
+        return ApplicationContext.cardRepository.allCards();
+    }
+
+    public Card selectCard(String cardNumber){
+        return (Card) cardRepository.findBy("card_number",cardNumber);
+    }
+    public ArrayList<Card> showCards(String column, String value, Integer id) {
+        return ApplicationContext.cardRepository.findBy(column, value, id);
+    }
+
+    public ArrayList<Card> showAllCards(Integer id) {
+        return ApplicationContext.cardRepository.showAll(id);
     }
 
     public void addCard(Integer userId) {
@@ -43,7 +53,4 @@ public class CardService {
     public void removeCard(String cardNumber) {
         cardRepository.remove(cardNumber);
     }
-    //findCard
-    //showSpecifiedBankCards
-    //showAllCards
 }
